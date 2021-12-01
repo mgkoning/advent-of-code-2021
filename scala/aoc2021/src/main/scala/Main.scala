@@ -5,7 +5,7 @@ import java.time.LocalDate
   runners.get(day) match
     case Some(runner) => 
       println("Running day " + day)
-      runner.solve
+      runner.solve(Input.asString(day))
     case None => println("Can't run " + day)
 
 
