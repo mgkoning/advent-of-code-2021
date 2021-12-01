@@ -14,5 +14,5 @@ class Day01Test:
 260
 263"""
 
-  @Test def part1(): Unit = 
+  @Test def part1(): Unit =
     assertEquals(7, Day01.differences(input.linesIterator.map(_.toInt).toList).filter(0 < _).length)

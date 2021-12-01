@@ -1,5 +1,5 @@
-import java.time.Clock
 import java.time.LocalDate
+
 @main def aoc2021(args: String*): Unit = 
   val day = args.headOption.map(_.toInt).getOrElse(LocalDate.now.getDayOfMonth)
   runners.get(day) match
