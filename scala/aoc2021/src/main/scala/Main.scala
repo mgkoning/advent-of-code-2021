@@ -9,5 +9,6 @@ import java.time.LocalDate
     case None => println("Can't run " + day)
 
 
-val runners: Map[Int, PuzzleSolution] = Map.from(Seq((1, Day01)))
+val runners: Map[Int, PuzzleSolution] =
+  (1 to 31).zip(Seq(Day01, Day02)).toMap
 
