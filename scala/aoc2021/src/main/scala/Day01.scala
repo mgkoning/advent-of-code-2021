@@ -1,4 +1,7 @@
 object Day01 extends PuzzleSolution {
+
+  def title = "Sonar Sweep"
+
   def solve(input: String): Unit =
     val depths = input.linesIterator.map(_.toInt).toList
     println("Part 1:")

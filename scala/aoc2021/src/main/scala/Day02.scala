@@ -1,4 +1,6 @@
 object Day02 extends PuzzleSolution {
+  def title = "Dive!"
+
   def solve(input: String): Unit =
     val directions = input.linesIterator.map(toDirection).toList
     val finalPos = directions.foldLeft(Position.zero)(Position.add)

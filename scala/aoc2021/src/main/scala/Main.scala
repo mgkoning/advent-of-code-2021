@@ -4,7 +4,7 @@ import java.time.LocalDate
   val day = args.headOption.map(_.toInt).getOrElse(LocalDate.now.getDayOfMonth)
   runners.get(day) match
     case Some(runner) => 
-      println("Running day " + day)
+      println(s"\n--- Day $day: ${runner.title} ---\n")
       runner.solve(Input.asString(day))
     case None => println("Can't run " + day)
 
