@@ -10,5 +10,5 @@ import java.time.LocalDate
 
 
 val runners: Map[Int, PuzzleSolution] =
-  (1 to 31).zip(Seq(Day01, Day02)).toMap
+  (1 to 31).zip(Seq(Day01, Day02, Day03)).toMap
 
