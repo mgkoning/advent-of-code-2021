@@ -1,11 +1,13 @@
 import scala.annotation.tailrec
+import scala.io.Source
+
 object Day03 extends PuzzleSolution {
   val bitValues = (0 to 15).map(scala.math.pow(2, _).longValue).toList
 
   def title = "Binary Diagnostic"
 
-  def solve(input: String): Unit =
-    val lines = input.linesIterator.map(_.toSeq).toList
+  def solve(input: Source): Unit =
+    val lines = input.getLines.map(_.toSeq).toList
     println("Part 1:")
     val (gammaRate, epsilonRate) = gammaEpsilon(lines)
     println(gammaRate * epsilonRate)

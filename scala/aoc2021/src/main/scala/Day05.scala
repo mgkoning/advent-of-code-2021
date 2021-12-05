@@ -1,8 +1,10 @@
+import scala.io.Source
+
 object Day05 extends PuzzleSolution {
   def title = "Hydrothermal Venture"
 
-  def solve(input: String): Unit =
-    val ventLines = parseInput(input).toList
+  def solve(input: Source): Unit =
+    val ventLines = parseInput(input.getLines).toList
     println("Part 1:")
     val horVert = ventLines.flatMap(horVertCoords).toList
     println(countDuplicates(horVert))
@@ -23,8 +25,8 @@ object Day05 extends PuzzleSolution {
       then Seq.empty
       else line.xs.zip(line.ys).map(Coord.ofTuple)
 
-  def parseInput(input: String): List[Line] =
-    input.linesIterator.map {
+  def parseInput(input: Iterator[String]): List[Line] =
+    input.map {
       case s"$x0,$y0 -> $x1,$y1" => Line(Coord.ofStrings(x0, y0), Coord.ofStrings(x1, y1)),
     }.toList
 }

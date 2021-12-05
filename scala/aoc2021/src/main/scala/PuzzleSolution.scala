@@ -1,4 +1,6 @@
+import scala.io.Source
+
 trait PuzzleSolution {
   def title: String
-  def solve(input: String): Unit
+  def solve(input: Source): Unit
 }

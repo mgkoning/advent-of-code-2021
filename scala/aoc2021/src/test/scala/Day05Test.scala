@@ -16,13 +16,13 @@ class Day05Test {
 
   @Test
   def part1 =
-    val ventSpecs = parseInput(input)
+    val ventSpecs = parseInput(input.linesIterator)
     val allCoords = ventSpecs.flatMap(horVertCoords)
     assertEquals(5, countDuplicates(allCoords))
 
   @Test
   def part2 =
-    val ventSpecs = parseInput(input)
+    val ventSpecs = parseInput(input.linesIterator)
     val horVert = ventSpecs.flatMap(horVertCoords)
     val diagonal = ventSpecs.flatMap(diagonalCoords)
     val allCoords = horVert.concat(diagonal)

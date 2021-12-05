@@ -1,14 +1,18 @@
 import java.time.LocalDate
 
-@main def aoc2021(args: String*): Unit = 
-  val day = args.headOption.map(_.toInt).getOrElse(LocalDate.now.getDayOfMonth)
-  runners.get(day) match
-    case Some(runner) => 
-      println(s"\n--- Day $day: ${runner.title} ---\n")
-      runner.solve(Input.asString(day))
-    case None => println("Can't run " + day)
+@main def aoc2021(args: String*): Unit =
+  val firstArg = args.headOption
+  firstArg match
+    case None => runDay(LocalDate.now.getDayOfMonth)
+    case Some("all") => runners.keySet.toSeq.sorted.foreach(runDay)
+    case Some(day) => runDay(day.toInt)
 
+def runDay(day: Int) = runners.get(day) match
+  case Some(runner) => 
+    println(s"\n--- Day $day: ${runner.title} ---\n")
+    runner.solve(Input.getFile(day))
+  case None => println("Can't run " + day)
 
 val runners: Map[Int, PuzzleSolution] =
-  (1 to 31).zip(Seq(Day01, Day02, Day03, Day04, Day05)).toMap
+  (1 to 31).zip(Seq(Day01, Day02, Day03, Day04, Day05, Day06)).toMap
 

@@ -24,14 +24,14 @@ class Day04Test {
 
   @Test
   def part1 =
-    val (rolls, cards) = Day04.parseInput(input)
+    val (rolls, cards) = Day04.parseInput(input.linesIterator)
     val (winningCard, atNumber) = Day04.allWinners(rolls, cards).head
     assertEquals(24, atNumber)
     assertEquals(188, Day04.score(winningCard))
 
   @Test
   def part2 =
-    val (rolls, cards) = Day04.parseInput(input)
+    val (rolls, cards) = Day04.parseInput(input.linesIterator)
     val (lastWinningCard, atNumber) = Day04.allWinners(rolls, cards).last
     assertEquals(13, atNumber)
     assertEquals(148, Day04.score(lastWinningCard))

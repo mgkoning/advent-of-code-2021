@@ -1,4 +1,5 @@
 import scala.util.matching.Regex
+import scala.io.Source
 
 object Day04 extends PuzzleSolution {
 
@@ -10,8 +11,8 @@ object Day04 extends PuzzleSolution {
 
   def title = "Giant Squid"
 
-  def solve(input: String) =
-    val (rolls, cards) = parseInput(input)
+  def solve(input: Source) =
+    val (rolls, cards) = parseInput(input.getLines)
     println("Part 1:")
     val winners = allWinners(rolls, cards)
     val (winningCard, winningNumber) = winners.head
@@ -54,8 +55,8 @@ object Day04 extends PuzzleSolution {
     allPositionsMarked((0 until 5).map(i => intersection.copy(x = i)))
       || allPositionsMarked((0 until 5).map(i => intersection.copy(y = i)))
 
-  def parseInput(input: String): (Seq[Int], List[BingoCard]) =
-    val lines = input.linesIterator.toList
+  def parseInput(input: Iterator[String]): (Seq[Int], List[BingoCard]) =
+    val lines = input.toList
     val rolls = lines.head.split(',').map(_.toInt)
     val cards = lines.drop(1).grouped(6).map(c => parseCard(c.drop(1))).map(BingoCard(_)).toList
     (rolls, cards)

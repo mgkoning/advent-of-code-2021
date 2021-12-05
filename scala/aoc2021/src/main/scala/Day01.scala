@@ -1,9 +1,11 @@
+import scala.io.Source
+
 object Day01 extends PuzzleSolution {
 
   def title = "Sonar Sweep"
 
-  def solve(input: String): Unit =
-    val depths = input.linesIterator.map(_.toInt).toList
+  def solve(input: Source): Unit =
+    val depths = input.getLines.map(_.toInt).toList
     println("Part 1:")
     println(differences(depths).filter(0 < _).length)
     println("Part 2:")

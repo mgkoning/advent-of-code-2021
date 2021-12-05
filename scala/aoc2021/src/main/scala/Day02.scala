@@ -1,8 +1,10 @@
+import scala.io.Source
+
 object Day02 extends PuzzleSolution {
   def title = "Dive!"
 
-  def solve(input: String): Unit =
-    val directions = input.linesIterator.map(toDirection).toList
+  def solve(input: Source): Unit =
+    val directions = input.getLines.map(toDirection).toList
     val finalPos = directions.foldLeft(Position.zero)(Position.add)
     println("Part 1:")
     println(finalPos.depth * finalPos.hor)
