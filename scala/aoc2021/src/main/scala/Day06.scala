@@ -13,9 +13,9 @@ object Day06 extends PuzzleSolution {
 
   def lanternfishAfterDays(days: Int, startAges: Seq[Int]): Long =
     val cache = getBirthTimeCache(days)
-    startAges.map(age => cache.get(age - 8).get).sum
+    startAges.flatMap(age => cache.get(age - 8).toList).sum
 
-  // to prevent calculating the same values over and over, we work 'backwards' from the maximum age:
+  // To prevent calculating the same values over and over, we work 'backwards' from the maximum age:
   // determine how many fish would be spawned if a lanternfish is born at a certain time. We will
   // eventually also visit its parent, and we'll know how many spawns the parent will have, plus
   // how many spawn their spawn will have. We accumulate it to -10 because the fish we start with
@@ -26,8 +26,8 @@ object Day06 extends PuzzleSolution {
         case i if i < -10 => accumulated
         case i =>
           val firstSpawn = i + 9
-          val spawns = Seq.iterate(firstSpawn, maxAge / 6 + 1)(_ + 7).takeWhile(_ <= maxAge)
-          val allSpawns = spawns.map(age => accumulated.get(age).get).sum
+          val spawns = Iterator.from(firstSpawn, 7).takeWhile(_ <= maxAge)
+          val allSpawns = spawns.flatMap(age => accumulated.get(age).toList).sum
           buildCache(age - 1, accumulated.updated(i, 1 + allSpawns))
 
     val initialMap = (0 to 7).map(maxAge - _).map(_ -> 1L).toMap
