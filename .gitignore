@@ -44,6 +44,9 @@ bin/
 #general
 *.class
 
+# elm
+elm-stuff/
+
 # aoc specific
 input/day*.txt
 
