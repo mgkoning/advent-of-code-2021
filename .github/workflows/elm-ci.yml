@@ -24,7 +24,7 @@ jobs:
           WEBDAV_USER: ${{secrets.WEBDAV_USER}}
           WEBDAV_PASSWORD: ${{secrets.WEBDAV_PASSWORD}}
         run: |
-          echo curl -X MKCOL '$WEBDAV_ROOT/ccs' -u '$WEBDAV_USER:$WEBDAV_PASSWORD'
-          echo curl -X MKCOL '$WEBDAV_ROOT/images' -u '$WEBDAV_USER:$WEBDAV_PASSWORD'
+          echo curl -X MKCOL "$WEBDAV_ROOT/ccs" -u "$WEBDAV_USER:$WEBDAV_PASSWORD"
+          echo curl -X MKCOL "$WEBDAV_ROOT/images" -u "$WEBDAV_USER:$WEBDAV_PASSWORD"
           cd $GITHUB_WORKSPACE/elm/dist
-          find . -type f -exec echo curl -T {} '$WEBDAV_ROOT/{}' -u '$WEBDAV_USER:$WEBDAV_PASSWORD' \;
+          find . -type f -exec echo curl -T {} "$WEBDAV_ROOT/{}" -u "$WEBDAV_USER:$WEBDAV_PASSWORD" \;
