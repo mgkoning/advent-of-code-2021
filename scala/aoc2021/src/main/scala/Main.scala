@@ -14,6 +14,9 @@ def runDay(day: Int) = runners.get(day) match
   case None => println("Can't run " + day)
 
 val runners: Map[Int, PuzzleSolution] =
-  val runners = Seq(Day01, Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09)
+  val runners = Seq(
+    Day01, Day02, Day03, Day04, Day05,
+    Day06, Day07, Day08, Day09, Day10
+  )
   (1 to 31).zip(runners).toMap
 
