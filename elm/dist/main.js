@@ -4355,21 +4355,21 @@ function _Browser_load(url)
 		}
 	}));
 }
-var $author$project$Main$Day01 = {$: 'Day01'};
+var $author$project$Model$Day01 = {$: 'Day01'};
 var $author$project$Main$Model = F3(
 	function (day, input, result) {
 		return {day: day, input: input, result: result};
 	});
 var $elm$core$Maybe$Nothing = {$: 'Nothing'};
-var $author$project$Main$PuzzleResult = F2(
+var $author$project$Model$PuzzleResult = F2(
 	function (part1, part2) {
 		return {part1: part1, part2: part2};
 	});
 var $author$project$Main$init = A3(
 	$author$project$Main$Model,
-	$author$project$Main$Day01,
+	$author$project$Model$Day01,
 	'',
-	A2($author$project$Main$PuzzleResult, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing));
+	A2($author$project$Model$PuzzleResult, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing));
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -5260,15 +5260,21 @@ var $author$project$Day01$runSolution = F2(
 						readings,
 						A2($elm$core$List$drop, dropN, readings)))));
 	});
-var $author$project$Day01$part1 = $author$project$Day01$runSolution(1);
-var $author$project$Main$runPart1 = function (model) {
-	var _v0 = model.day;
-	return $author$project$Day01$part1(model.input);
+var $author$project$Day01$solve = function (i) {
+	return A2(
+		$author$project$Model$PuzzleResult,
+		$elm$core$Maybe$Just(
+			A2($author$project$Day01$runSolution, 1, i)),
+		$elm$core$Maybe$Just(
+			A2($author$project$Day01$runSolution, 3, i)));
 };
-var $author$project$Day01$part2 = $author$project$Day01$runSolution(3);
-var $author$project$Main$runPart2 = function (model) {
+var $author$project$Main$runPuzzle = function (model) {
 	var _v0 = model.day;
-	return $author$project$Day01$part2(model.input);
+	if (_v0.$ === 'Day01') {
+		return $author$project$Day01$solve(model.input);
+	} else {
+		return A2($author$project$Model$PuzzleResult, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing);
+	}
 };
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -5283,51 +5289,47 @@ var $author$project$Main$update = F2(
 				return _Utils_update(
 					model,
 					{day: puzzle});
-			case 'RunPart1':
-				return _Utils_update(
-					model,
-					{
-						result: A2(
-							$author$project$Main$PuzzleResult,
-							$elm$core$Maybe$Just(
-								$author$project$Main$runPart1(model)),
-							$elm$core$Maybe$Nothing)
-					});
-			case 'RunPart2':
-				return _Utils_update(
-					model,
-					{
-						result: A2(
-							$author$project$Main$PuzzleResult,
-							$elm$core$Maybe$Nothing,
-							$elm$core$Maybe$Just(
-								$author$project$Main$runPart2(model)))
-					});
 			default:
 				return _Utils_update(
 					model,
 					{
-						result: A2(
-							$author$project$Main$PuzzleResult,
-							$elm$core$Maybe$Just(
-								$author$project$Main$runPart1(model)),
-							$elm$core$Maybe$Just(
-								$author$project$Main$runPart2(model)))
+						result: $author$project$Main$runPuzzle(model)
 					});
 		}
 	});
-var $author$project$Main$RunBoth = {$: 'RunBoth'};
-var $author$project$Main$RunPart1 = {$: 'RunPart1'};
-var $author$project$Main$RunPart2 = {$: 'RunPart2'};
+var $author$project$Main$RunPuzzle = {$: 'RunPuzzle'};
+var $author$project$Model$Day02 = {$: 'Day02'};
+var $author$project$Model$allPuzzles = _List_fromArray(
+	[$author$project$Model$Day01, $author$project$Model$Day02]);
+var $elm$html$Html$button = _VirtualDom_node('button');
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
+var $elm$core$List$concatMap = F2(
+	function (f, list) {
+		return $elm$core$List$concat(
+			A2($elm$core$List$map, f, list));
+	});
 var $author$project$Main$SetDay = function (a) {
 	return {$: 'SetDay', a: a};
 };
-var $author$project$Main$SetInput = function (a) {
-	return {$: 'SetInput', a: a};
-};
-var $elm$html$Html$br = _VirtualDom_node('br');
-var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -5344,6 +5346,40 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		$elm$html$Html$Events$on,
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
+};
+var $author$project$Model$puzzleName = function (puzzle) {
+	if (puzzle.$ === 'Day01') {
+		return 'Day 01';
+	} else {
+		return 'Day 02';
+	}
+};
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Main$dayButton = F2(
+	function (model, puzzle) {
+		var buttonClass = _Utils_eq(puzzle, model.day) ? 'button-primary' : '';
+		return _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$SetDay(puzzle)),
+						$elm$html$Html$Attributes$class(buttonClass)
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text(
+						$author$project$Model$puzzleName(puzzle))
+					])),
+				$elm$html$Html$text(' ')
+			]);
+	});
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$Main$SetInput = function (a) {
+	return {$: 'SetInput', a: a};
 };
 var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
@@ -5378,81 +5414,58 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 			$elm$html$Html$Events$alwaysStop,
 			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
-var $elm$json$Json$Decode$andThen = _Json_andThen;
-var $elm$json$Json$Decode$fail = _Json_fail;
-var $author$project$Main$puzzleDecoder = A2(
-	$elm$json$Json$Decode$andThen,
-	function (val) {
-		if (val === 'd01') {
-			return $elm$json$Json$Decode$succeed($author$project$Main$Day01);
-		} else {
-			return $elm$json$Json$Decode$fail('Invalid puzzle ' + val);
-		}
-	},
-	$elm$html$Html$Events$targetValue);
-var $elm$html$Html$option = _VirtualDom_node('option');
-var $author$project$Main$puzzleName = function (puzzle) {
-	return 'Day 01';
-};
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Main$toString = function (puzzle) {
-	return 'd01';
-};
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
-var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
-var $author$project$Main$puzzleOption = function (puzzle) {
+var $elm$html$Html$textarea = _VirtualDom_node('textarea');
+var $author$project$Main$inputArea = function (model) {
 	return A2(
-		$elm$html$Html$option,
+		$elm$html$Html$textarea,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$value(
-				$author$project$Main$toString(puzzle))
+				$elm$html$Html$Events$onInput($author$project$Main$SetInput),
+				$elm$html$Html$Attributes$class('u-full-width puzzle-input')
 			]),
 		_List_fromArray(
 			[
-				$elm$html$Html$text(
-				$author$project$Main$puzzleName(puzzle))
+				$elm$html$Html$text(model.input)
 			]));
 };
+var $elm$html$Html$h5 = _VirtualDom_node('h5');
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $author$project$Main$puzzleResult = function (r) {
 	var partResult = F2(
 		function (title, value) {
-			return A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				function () {
-					if (value.$ === 'Nothing') {
-						return _List_Nil;
-					} else {
-						var v = value.a;
-						return _List_fromArray(
+			if (value.$ === 'Nothing') {
+				return _List_Nil;
+			} else {
+				var v = value.a;
+				return _List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h5,
+						_List_Nil,
+						_List_fromArray(
 							[
-								$elm$html$Html$text(title),
-								A2($elm$html$Html$br, _List_Nil, _List_Nil),
+								$elm$html$Html$text(title)
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_Nil,
+						_List_fromArray(
+							[
 								$elm$html$Html$text(v)
-							]);
-					}
-				}());
+							]))
+					]);
+			}
 		});
 	return A2(
 		$elm$html$Html$div,
 		_List_Nil,
-		_List_fromArray(
-			[
-				A2(partResult, 'Part 1', r.part1),
-				A2(partResult, 'Part 2', r.part2)
-			]));
+		$elm$core$List$concat(
+			_List_fromArray(
+				[
+					A2(partResult, 'Part 1', r.part1),
+					A2(partResult, 'Part 2', r.part2)
+				])));
 };
-var $elm$html$Html$select = _VirtualDom_node('select');
-var $elm$html$Html$textarea = _VirtualDom_node('textarea');
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
@@ -5460,61 +5473,52 @@ var $author$project$Main$view = function (model) {
 		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$textarea,
-				_List_fromArray(
-					[
-						$elm$html$Html$Events$onInput($author$project$Main$SetInput)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text(model.input)
-					])),
-				A2($elm$html$Html$br, _List_Nil, _List_Nil),
+				$elm$html$Html$div,
+				_List_Nil,
 				A2(
-				$elm$html$Html$select,
+					$elm$core$List$concatMap,
+					$author$project$Main$dayButton(model),
+					$author$project$Model$allPuzzles)),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('row')
+					]),
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$Events$on,
-						'change',
-						A2($elm$json$Json$Decode$map, $author$project$Main$SetDay, $author$project$Main$puzzleDecoder))
-					]),
-				_List_fromArray(
-					[
-						$author$project$Main$puzzleOption($author$project$Main$Day01)
-					])),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Events$onClick($author$project$Main$RunPart1)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Part 1')
-					])),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Events$onClick($author$project$Main$RunPart2)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Part 2')
-					])),
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Events$onClick($author$project$Main$RunBoth)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Both parts')
-					])),
-				A2($elm$html$Html$br, _List_Nil, _List_Nil),
-				$author$project$Main$puzzleResult(model.result)
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('one-half column')
+							]),
+						_List_fromArray(
+							[
+								$author$project$Main$inputArea(model)
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('one-half column')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Events$onClick($author$project$Main$RunPuzzle),
+										$elm$html$Html$Attributes$class('button-primary')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Run it!')
+									])),
+								$author$project$Main$puzzleResult(model.result)
+							]))
+					]))
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$sandbox(

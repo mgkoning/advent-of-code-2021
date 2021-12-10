@@ -1,11 +1,10 @@
-module Day01 exposing (part1, part2)
+module Day01 exposing (solve)
+import Model exposing (PuzzleResult)
 
-part1: String -> String
-part1 = runSolution 1
+solve: String -> PuzzleResult
+solve i = PuzzleResult (Just <| runSolution 1 i) (Just <| runSolution 3 i)
 
-part2: String -> String
-part2 = runSolution 3
-
+runSolution : Int -> String -> String
 runSolution dropN input =
   let readings = readInput input
   in List.map2 Tuple.pair readings (List.drop dropN readings)
@@ -13,4 +12,5 @@ runSolution dropN input =
     |> List.length
     |> String.fromInt
 
+readInput : String -> List Int
 readInput s = String.lines s |> List.map (String.toInt >> Maybe.withDefault -1)
