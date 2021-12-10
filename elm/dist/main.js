@@ -5268,12 +5268,15 @@ var $author$project$Day01$solve = function (i) {
 		$elm$core$Maybe$Just(
 			A2($author$project$Day01$runSolution, 3, i)));
 };
+var $author$project$Day02$solve = function (s) {
+	return A2($author$project$Model$PuzzleResult, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing);
+};
 var $author$project$Main$runPuzzle = function (model) {
 	var _v0 = model.day;
 	if (_v0.$ === 'Day01') {
 		return $author$project$Day01$solve(model.input);
 	} else {
-		return A2($author$project$Model$PuzzleResult, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing);
+		return $author$project$Day02$solve(model.input);
 	}
 };
 var $author$project$Main$update = F2(
