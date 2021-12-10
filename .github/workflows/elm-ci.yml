@@ -19,6 +19,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Upload elm dist files
+        env:
+          WEBDAV_ROOT: ${{secrets.WEBDAV_ROOT}}
+          WEBDAV_USER: ${{secrets.WEBDAV_USER}}
+          WEBDAV_PASSWORD: ${{secrets.WEBDAV_PASSWORD}}
         run: |
+          curl -X MKCOL "$WEBDAV_ROOT/css" -u "$WEBDAV_USER:$WEBDAV_PASSWORD"
+          curl -X MKCOL "$WEBDAV_ROOT/images" -u "$WEBDAV_USER:$WEBDAV_PASSWORD"
           cd $GITHUB_WORKSPACE/elm/dist
-          find . -exec echo "should upload {}" \;
+          find . -type f -exec curl -T {} "$WEBDAV_ROOT/{}" -u "$WEBDAV_USER:$WEBDAV_PASSWORD" \;
