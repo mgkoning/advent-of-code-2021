@@ -5495,6 +5495,49 @@ var $author$project$Main$dayButton = F2(
 			]);
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$Main$rowDiv = function (inner) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('row')
+			]),
+		inner);
+};
+var $author$project$Main$explanationRow = $author$project$Main$rowDiv(
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Choose a day to solve, paste the input and run it!')
+				]))
+		]));
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $author$project$Main$footerRow = $author$project$Main$rowDiv(
+	_List_fromArray(
+		[
+			$elm$html$Html$text('Source at '),
+			A2(
+			$elm$html$Html$a,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$href('https://github.com/mgkoning/advent-of-code-2021')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Github')
+				]))
+		]));
 var $author$project$Main$SetInput = function (a) {
 	return {$: 0, a: a};
 };
@@ -5546,7 +5589,6 @@ var $author$project$Main$inputArea = function (model) {
 			]));
 };
 var $elm$html$Html$h5 = _VirtualDom_node('h5');
-var $elm$html$Html$p = _VirtualDom_node('p');
 var $author$project$Main$puzzleResult = function (r) {
 	var partResult = F2(
 		function (title, value) {
@@ -5583,12 +5625,35 @@ var $author$project$Main$puzzleResult = function (r) {
 					A2(partResult, 'Part 2', r.aF)
 				])));
 };
+var $author$project$Main$subHeader = $author$project$Main$rowDiv(
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Solutions for '),
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('https://adventofcode.com/2021')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Advent of Code 2021')
+						])),
+					$elm$html$Html$text(' in Elm.')
+				]))
+		]));
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
+				$author$project$Main$subHeader,
 				A2(
 				$elm$html$Html$div,
 				_List_Nil,
@@ -5596,12 +5661,8 @@ var $author$project$Main$view = function (model) {
 					$elm$core$List$concatMap,
 					$author$project$Main$dayButton(model),
 					$author$project$Model$allPuzzles)),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('row')
-					]),
+				$author$project$Main$explanationRow,
+				$author$project$Main$rowDiv(
 				_List_fromArray(
 					[
 						A2(
@@ -5635,7 +5696,8 @@ var $author$project$Main$view = function (model) {
 									])),
 								$author$project$Main$puzzleResult(model.N)
 							]))
-					]))
+					])),
+				$author$project$Main$footerRow
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$sandbox(

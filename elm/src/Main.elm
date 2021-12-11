@@ -1,9 +1,9 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, button, div, text, h5, textarea, p)
+import Html exposing (Html, button, div, text, h5, textarea, p, a)
 import Html.Events exposing (onClick, onInput)
-import Html.Attributes exposing (value, class)
+import Html.Attributes exposing (value, class, href)
 import Day01
 import Day02
 import Model exposing (..)
@@ -27,8 +27,7 @@ update msg model =
   case msg of
     SetInput input -> { model | input = input }
     SetDay puzzle -> { model | day = puzzle }
-    RunPuzzle ->
-      { model | result = runPuzzle model }
+    RunPuzzle -> { model | result = runPuzzle model }
 
 runPuzzle : Model -> PuzzleResult
 runPuzzle model = case model.day of
@@ -39,15 +38,36 @@ runPuzzle model = case model.day of
 view : Model -> Html Msg
 view model =
   div []
-    [ div [] (List.concatMap (dayButton model) allPuzzles)
-    , div [ class "row" ]
+    [ subHeader
+    , div [] (List.concatMap (dayButton model) allPuzzles)
+    , explanationRow
+    , rowDiv
         [ div [ class "one-half column"] [inputArea model]
         , div [ class "one-half column"]
           [ button [ onClick RunPuzzle, class "button-primary" ] [ text "Run it!" ]
           , puzzleResult model.result
           ]
         ]
+    , footerRow
     ]
+
+subHeader: Html Msg
+subHeader = rowDiv [
+  p []
+    [ text "Solutions for "
+    , a [href "https://adventofcode.com/2021"] [text "Advent of Code 2021"]
+    , text " in Elm."
+    ]
+  ]
+
+explanationRow: Html Msg
+explanationRow = rowDiv [ p [] [text "Choose a day to solve, paste the input and run it!"] ]
+
+footerRow : Html Msg
+footerRow = rowDiv [text "Source at ", a [ href "https://github.com/mgkoning/advent-of-code-2021"] [text "Github"]]
+
+rowDiv: List (Html Msg) -> Html Msg
+rowDiv inner = div [class "row"] inner
 
 inputArea: Model -> Html Msg
 inputArea model =
