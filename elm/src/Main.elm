@@ -6,6 +6,7 @@ import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (value, class, href)
 import Day01
 import Day02
+import Day03
 import Model exposing (..)
 
 main : Program () Model Msg
@@ -33,6 +34,7 @@ runPuzzle : Model -> PuzzleResult
 runPuzzle model = case model.day of
   Day01 -> Day01.solve model.input
   Day02 -> Day02.solve model.input
+  Day03 -> Day03.solve model.input
 
 -- VIEW
 view : Model -> Html Msg
@@ -64,7 +66,10 @@ explanationRow: Html Msg
 explanationRow = rowDiv [ p [] [text "Choose a day to solve, paste the input and run it!"] ]
 
 footerRow : Html Msg
-footerRow = rowDiv [text "Source at ", a [ href "https://github.com/mgkoning/advent-of-code-2021"] [text "Github"]]
+footerRow = rowDiv
+  [text "Source at "
+  , a [ href "https://github.com/mgkoning/advent-of-code-2021"] [text "Github"]
+  ]
 
 rowDiv: List (Html Msg) -> Html Msg
 rowDiv inner = div [class "row"] inner

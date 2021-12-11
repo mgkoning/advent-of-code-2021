@@ -4355,10 +4355,47 @@ function _Browser_load(url)
 		}
 	}));
 }
+
+
+
+var _Bitwise_and = F2(function(a, b)
+{
+	return a & b;
+});
+
+var _Bitwise_or = F2(function(a, b)
+{
+	return a | b;
+});
+
+var _Bitwise_xor = F2(function(a, b)
+{
+	return a ^ b;
+});
+
+function _Bitwise_complement(a)
+{
+	return ~a;
+};
+
+var _Bitwise_shiftLeftBy = F2(function(offset, a)
+{
+	return a << offset;
+});
+
+var _Bitwise_shiftRightBy = F2(function(offset, a)
+{
+	return a >> offset;
+});
+
+var _Bitwise_shiftRightZfBy = F2(function(offset, a)
+{
+	return a >>> offset;
+});
 var $author$project$Model$Day01 = 0;
 var $author$project$Main$Model = F3(
 	function (day, input, result) {
-		return {J: day, C: input, N: result};
+		return {J: day, z: input, N: result};
 	});
 var $elm$core$Maybe$Nothing = {$: 1};
 var $author$project$Model$PuzzleResult = F2(
@@ -5401,12 +5438,99 @@ var $author$project$Day02$solve = function (s) {
 		$elm$core$Maybe$Just(
 			$elm$core$String$fromInt(part2)));
 };
+var $elm$core$Bitwise$and = _Bitwise_and;
+var $elm$core$Bitwise$or = _Bitwise_or;
+var $elm$core$Bitwise$shiftLeftBy = _Bitwise_shiftLeftBy;
+var $elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
+var $elm$core$List$sum = function (numbers) {
+	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
+};
+var $author$project$Day03$calculateGamma = F2(
+	function (n, values) {
+		var valueCount = $elm$core$List$length(values);
+		var gammaRateInner = F2(
+			function (s, result) {
+				gammaRateInner:
+				while (true) {
+					if (_Utils_cmp(n, s) < 0) {
+						return result;
+					} else {
+						var oneBits = $elm$core$List$sum(
+							A2(
+								$elm$core$List$map,
+								A2(
+									$elm$core$Basics$composeR,
+									$elm$core$Bitwise$shiftRightZfBy(s),
+									$elm$core$Bitwise$and(1)),
+								values));
+						var zeroBits = valueCount - oneBits;
+						var nextBit = (_Utils_cmp(zeroBits, oneBits) < 0) ? 1 : 0;
+						var $temp$s = s + 1,
+							$temp$result = result | (nextBit << s);
+						s = $temp$s;
+						result = $temp$result;
+						continue gammaRateInner;
+					}
+				}
+			});
+		return A2(gammaRateInner, 0, 0);
+	});
+var $elm$core$Bitwise$complement = _Bitwise_complement;
+var $elm$core$String$foldr = _String_foldr;
+var $elm$core$String$toList = function (string) {
+	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
+};
+var $author$project$Day03$fromBits = function () {
+	var readBit = function (c) {
+		return (c === '1') ? 1 : 0;
+	};
+	var addBit = F2(
+		function (c, val) {
+			return c | (val << 1);
+		});
+	return A2(
+		$elm$core$Basics$composeR,
+		$elm$core$String$toList,
+		A2(
+			$elm$core$Basics$composeR,
+			$elm$core$List$map(readBit),
+			A2($elm$core$List$foldl, addBit, 0)));
+}();
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $author$project$Day03$solve = function (s) {
+	var lines = $elm$core$String$lines(s);
+	var values = A2($elm$core$List$map, $author$project$Day03$fromBits, lines);
+	var bits = $elm$core$String$length(
+		A2(
+			$elm$core$Maybe$withDefault,
+			'',
+			$elm$core$List$head(lines)));
+	var gamma = A2($author$project$Day03$calculateGamma, bits, values);
+	var bitMask = (1 << bits) - 1;
+	var epsilon = (~gamma) & bitMask;
+	return A2(
+		$author$project$Model$PuzzleResult,
+		$elm$core$Maybe$Just(
+			$elm$core$String$fromInt(gamma * epsilon)),
+		$elm$core$Maybe$Nothing);
+};
 var $author$project$Main$runPuzzle = function (model) {
 	var _v0 = model.J;
-	if (!_v0) {
-		return $author$project$Day01$solve(model.C);
-	} else {
-		return $author$project$Day02$solve(model.C);
+	switch (_v0) {
+		case 0:
+			return $author$project$Day01$solve(model.z);
+		case 1:
+			return $author$project$Day02$solve(model.z);
+		default:
+			return $author$project$Day03$solve(model.z);
 	}
 };
 var $author$project$Main$update = F2(
@@ -5416,7 +5540,7 @@ var $author$project$Main$update = F2(
 				var input = msg.a;
 				return _Utils_update(
 					model,
-					{C: input});
+					{z: input});
 			case 1:
 				var puzzle = msg.a;
 				return _Utils_update(
@@ -5432,8 +5556,9 @@ var $author$project$Main$update = F2(
 	});
 var $author$project$Main$RunPuzzle = {$: 2};
 var $author$project$Model$Day02 = 1;
+var $author$project$Model$Day03 = 2;
 var $author$project$Model$allPuzzles = _List_fromArray(
-	[0, 1]);
+	[0, 1, 2]);
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -5465,10 +5590,13 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		$elm$json$Json$Decode$succeed(msg));
 };
 var $author$project$Model$puzzleName = function (puzzle) {
-	if (!puzzle) {
-		return 'Day 01';
-	} else {
-		return 'Day 02';
+	switch (puzzle) {
+		case 0:
+			return 'Day 01';
+		case 1:
+			return 'Day 02';
+		default:
+			return 'Day 03';
 	}
 };
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
@@ -5585,7 +5713,7 @@ var $author$project$Main$inputArea = function (model) {
 			]),
 		_List_fromArray(
 			[
-				$elm$html$Html$text(model.C)
+				$elm$html$Html$text(model.z)
 			]));
 };
 var $elm$html$Html$h5 = _VirtualDom_node('h5');
