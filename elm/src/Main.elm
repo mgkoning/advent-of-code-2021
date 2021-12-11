@@ -18,7 +18,9 @@ type alias Model = { day: Puzzle,
                      result: PuzzleResult }
 
 init : Model
-init = Model Day01 "" (PuzzleResult Nothing Nothing)
+init = 
+  let defaultDay = List.reverse allPuzzles |> List.head |> Maybe.withDefault Day01
+  in Model defaultDay "" <| PuzzleResult Nothing Nothing
 
 -- UPDATE
 type Msg = SetInput String | SetDay Puzzle | RunPuzzle
