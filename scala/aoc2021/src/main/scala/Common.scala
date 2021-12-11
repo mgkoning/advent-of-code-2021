@@ -8,8 +8,11 @@ object Coord:
 
   def ofStrings(x: String, y: String) = Coord(x.toInt, y.toInt)
 
-  def adjacent(c: Coord): Seq[Coord] =
+  def adjacent4(c: Coord): Seq[Coord] =
     Seq(Coord(c.x - 1, c.y), Coord(c.x + 1, c.y), Coord(c.x, c.y - 1), Coord(c.x, c.y + 1))
+
+  def adjacent8(c: Coord): Seq[Coord] =
+    for dx <- (-1 to 1); dy <- (-1 to 1) if dx != 0 || dy != 0 yield Coord(c.x + dx, c.y + dy)
 
 case class Line(one: Coord, other: Coord):
   def isHorizontalOrVertical = one.x == other.x || one.y == other.y

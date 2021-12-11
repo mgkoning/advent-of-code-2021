@@ -15,7 +15,7 @@ object Day09 extends PuzzleSolution {
 
   def findLowPoints(ventMap: Map[Coord, Int]): Map[Coord, Int] =
     def isLowPoint(c: Coord, height: Int) =
-      Coord.adjacent(c).forall(height < ventMap.getOrElse(_, 10))
+      Coord.adjacent4(c).forall(height < ventMap.getOrElse(_, 10))
     ventMap.filter(isLowPoint)
 
   def findBasinSize(ventMap: Map[Coord, Int])(from: Coord): Int =
@@ -23,7 +23,7 @@ object Day09 extends PuzzleSolution {
       if toVisit.isEmpty then size
       else
         val next = toVisit.head
-        val neighbors = Coord.adjacent(next)
+        val neighbors = Coord.adjacent4(next)
           .filter(!seen.contains(_))
           .filter(ventMap.getOrElse(_, 10) < 9)
         findBasinSizeInner(toVisit.tail ++ neighbors, seen ++ neighbors, size + neighbors.size)

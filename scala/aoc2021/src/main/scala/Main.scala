@@ -16,7 +16,8 @@ def runDay(day: Int) = runners.get(day) match
 val runners: Map[Int, PuzzleSolution] =
   val runners = Seq(
     Day01, Day02, Day03, Day04, Day05,
-    Day06, Day07, Day08, Day09, Day10
+    Day06, Day07, Day08, Day09, Day10,
+    Day11
   )
   (1 to 31).zip(runners).toMap
 
