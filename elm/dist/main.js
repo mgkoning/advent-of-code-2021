@@ -5459,43 +5459,74 @@ var $author$project$Day02$solve = function (s) {
 			$elm$core$String$fromInt(part2)));
 };
 var $elm$core$Bitwise$and = _Bitwise_and;
+var $elm$core$Basics$not = _Basics_not;
 var $elm$core$Bitwise$or = _Bitwise_or;
+var $elm$core$List$partition = F2(
+	function (pred, list) {
+		var step = F2(
+			function (x, _v0) {
+				var trues = _v0.a;
+				var falses = _v0.b;
+				return pred(x) ? _Utils_Tuple2(
+					A2($elm$core$List$cons, x, trues),
+					falses) : _Utils_Tuple2(
+					trues,
+					A2($elm$core$List$cons, x, falses));
+			});
+		return A3(
+			$elm$core$List$foldr,
+			step,
+			_Utils_Tuple2(_List_Nil, _List_Nil),
+			list);
+	});
 var $elm$core$Bitwise$shiftLeftBy = _Bitwise_shiftLeftBy;
-var $elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
-var $elm$core$List$sum = function (numbers) {
-	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
-};
-var $author$project$Day03$calculateGamma = F2(
-	function (n, values) {
-		var valueCount = $elm$core$List$length(values);
-		var gammaRateInner = F2(
-			function (s, result) {
-				gammaRateInner:
+var $author$project$Day03$calculateRating = F4(
+	function (keepMatching, use1Fn, totalBits, v) {
+		var matchesAtBit = F2(
+			function (bit, value) {
+				return _Utils_eq(bit, bit & value);
+			});
+		var calculateRatingInner = F3(
+			function (atBit, result, values) {
+				calculateRatingInner:
 				while (true) {
-					if (_Utils_cmp(n, s) < 0) {
+					if (atBit < 0) {
 						return result;
 					} else {
-						var oneBits = $elm$core$List$sum(
-							A2(
-								$elm$core$List$map,
-								A2(
-									$elm$core$Basics$composeR,
-									$elm$core$Bitwise$shiftRightZfBy(s),
-									$elm$core$Bitwise$and(1)),
-								values));
-						var zeroBits = valueCount - oneBits;
-						var nextBit = (_Utils_cmp(zeroBits, oneBits) < 0) ? 1 : 0;
-						var $temp$s = s + 1,
-							$temp$result = result | (nextBit << s);
-						s = $temp$s;
-						result = $temp$result;
-						continue gammaRateInner;
+						if (values.b && (!values.b.b)) {
+							var x = values.a;
+							return x;
+						} else {
+							var currentBitAs1 = 1 << atBit;
+							var _v1 = A2(
+								$elm$core$List$partition,
+								matchesAtBit(currentBitAs1),
+								values);
+							var ones = _v1.a;
+							var zeroes = _v1.b;
+							var nextBit = A2(
+								use1Fn,
+								$elm$core$List$length(zeroes),
+								$elm$core$List$length(ones)) ? currentBitAs1 : 0;
+							var remainingValues = (!keepMatching) ? values : ((!nextBit) ? zeroes : ones);
+							var $temp$atBit = atBit - 1,
+								$temp$result = result | nextBit,
+								$temp$values = remainingValues;
+							atBit = $temp$atBit;
+							result = $temp$result;
+							values = $temp$values;
+							continue calculateRatingInner;
+						}
 					}
 				}
 			});
-		return A2(gammaRateInner, 0, 0);
+		return A3(calculateRatingInner, totalBits - 1, 0, v);
 	});
+var $author$project$Day03$calculateCo2ScrubberRating = A2($author$project$Day03$calculateRating, true, $elm$core$Basics$gt);
+var $author$project$Day03$calculateGammaRating = A2($author$project$Day03$calculateRating, false, $elm$core$Basics$le);
+var $author$project$Day03$calculateOxygenGeneratorRating = A2($author$project$Day03$calculateRating, true, $elm$core$Basics$le);
 var $elm$core$Bitwise$complement = _Bitwise_complement;
+var $author$project$Model$emptyPuzzleResult = A2($author$project$Model$PuzzleResult, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing);
 var $elm$core$String$foldr = _String_foldr;
 var $elm$core$String$toList = function (string) {
 	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
@@ -5516,6 +5547,26 @@ var $author$project$Day03$fromBits = function () {
 			$elm$core$List$map(readBit),
 			A2($elm$core$List$foldl, addBit, 0)));
 }();
+var $author$project$Model$setPart1 = F2(
+	function (v, r) {
+		return _Utils_update(
+			r,
+			{
+				aE: $elm$core$Maybe$Just(v)
+			});
+	});
+var $author$project$Model$setPart2 = F2(
+	function (v, r) {
+		return _Utils_update(
+			r,
+			{
+				aF: $elm$core$Maybe$Just(v)
+			});
+	});
+var $author$project$Day03$useBits = F2(
+	function (numBits, val) {
+		return val & ((1 << numBits) - 1);
+	});
 var $author$project$Day03$solve = function (s) {
 	var lines = $elm$core$String$lines(s);
 	var values = A2($elm$core$List$map, $author$project$Day03$fromBits, lines);
@@ -5524,14 +5575,17 @@ var $author$project$Day03$solve = function (s) {
 			$elm$core$Maybe$withDefault,
 			'',
 			$elm$core$List$head(lines)));
-	var gamma = A2($author$project$Day03$calculateGamma, bits, values);
-	var bitMask = (1 << bits) - 1;
-	var epsilon = (~gamma) & bitMask;
+	var co2 = A2($author$project$Day03$calculateCo2ScrubberRating, bits, values);
+	var gamma = A2($author$project$Day03$calculateGammaRating, bits, values);
+	var epsilon = A2($author$project$Day03$useBits, bits, ~gamma);
+	var oxygen = A2($author$project$Day03$calculateOxygenGeneratorRating, bits, values);
 	return A2(
-		$author$project$Model$PuzzleResult,
-		$elm$core$Maybe$Just(
-			$elm$core$String$fromInt(gamma * epsilon)),
-		$elm$core$Maybe$Nothing);
+		$author$project$Model$setPart1,
+		$elm$core$String$fromInt(gamma * epsilon),
+		A2(
+			$author$project$Model$setPart2,
+			$elm$core$String$fromInt(oxygen * co2),
+			$author$project$Model$emptyPuzzleResult));
 };
 var $author$project$Main$runPuzzle = function (model) {
 	var _v0 = model.J;
