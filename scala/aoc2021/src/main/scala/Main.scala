@@ -14,10 +14,10 @@ def runDay(day: Int) = runners.get(day) match
   case None => println("Can't run " + day)
 
 val runners: Map[Int, PuzzleSolution] =
-  val runners = Seq(
+  val runners = List(
     Day01, Day02, Day03, Day04, Day05,
     Day06, Day07, Day08, Day09, Day10,
-    Day11, Day12
+    Day11, Day12, Day13
   )
-  Iterator.iterate(1)(_ + 1).zip(runners).toMap
+  LazyList.iterate(1)(_ + 1).zip(runners).toMap
 
