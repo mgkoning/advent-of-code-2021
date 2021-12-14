@@ -26,8 +26,7 @@ object Day14 extends PuzzleSolution {
   def stepPairwise(rules: Rules)(pairs: List[PolymerPairCount]): List[PolymerPairCount] =
     def applyRule(pair: PolymerPair): List[PolymerPair] =
       val (left, right) = pair
-      val between = rules.get(pair)
-      return between.map(b => List((left, b), (b, right))).toList.flatMap(identity)
+      rules.get(pair).map(b => List((left, b), (b, right))).toList.flatMap(identity)
 
     val newPairs = pairs.flatMap((pair, count) => applyRule(pair).map(newPair => (newPair, count)))
     newPairs.foldLeft(Map.empty[PolymerPair, Long])(
