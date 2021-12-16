@@ -16,7 +16,7 @@ def runDay(day: Int) = runners.get(day) match
 val runners: Map[Int, PuzzleSolution] =
   val runners = List(
     Day01, Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day11, Day12, Day13,
-    Day14, Day15
+    Day14, Day15, Day16,
   )
   LazyList.iterate(1)(_ + 1).zip(runners).toMap
 
