@@ -2,7 +2,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import Day12.*
 
-class Day12Test {
+class Day12Test:
 
   @Test def findAllPathsTest =
     assertEquals(10, pathCount(smallSample, findAllPaths))
@@ -54,4 +54,3 @@ he-WI
 zg-he
 pj-fs
 start-RW"""
-}

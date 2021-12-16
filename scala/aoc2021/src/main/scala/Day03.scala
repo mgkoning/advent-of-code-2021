@@ -1,7 +1,7 @@
 import scala.annotation.tailrec
 import scala.io.Source
 
-object Day03 extends PuzzleSolution {
+object Day03 extends PuzzleSolution:
   val bitValues = (0 to 15).map(scala.math.pow(2, _).longValue).toList
 
   def title = "Binary Diagnostic"
@@ -42,7 +42,7 @@ object Day03 extends PuzzleSolution {
   def bitToInt(bit: Char) = if bit == '1' then 1 else 0
 
   def binaryToDecimal(bits: Seq[Int]) =
-    bits.reverse.zip(bitValues).map { case (b, v) => b * v }.sum
+    bits.reverse.zip(bitValues).map((b, v) => b * v).sum
 
   case class Accumulator(count: Int, oneCounts: Seq[Int]):
     def oneBits = oneCounts.map(i => if count - i < i then 1 else 0)
@@ -50,6 +50,6 @@ object Day03 extends PuzzleSolution {
     val zero = Accumulator(0, Seq.fill(15)(0))
     def add(acc: Accumulator, bits: Seq[Char]) = Accumulator(
       acc.count + 1,
-      acc.oneCounts.zip(bits).map { case (c, b) => c + bitToInt(b) }
+      acc.oneCounts.zip(bits).map((c, b) => c + bitToInt(b))
     )
-}
+

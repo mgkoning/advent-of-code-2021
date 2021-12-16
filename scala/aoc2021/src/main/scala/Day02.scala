@@ -1,6 +1,6 @@
 import scala.io.Source
 
-object Day02 extends PuzzleSolution {
+object Day02 extends PuzzleSolution:
   def title = "Dive!"
 
   def solve(input: Source): Unit =
@@ -14,12 +14,11 @@ object Day02 extends PuzzleSolution {
 
   val toDirection = (line: String) =>
     val parts = line.split(' ')
-    (parts(0), parts(1).toInt) match {
+    (parts(0), parts(1).toInt) match
       case ("forward", f) => Forward(f)
       case ("down", d) => Down(d)
       case ("up", u) => Up(u)
       case _ => throw Exception("whoops")
-    }
 
   case class Position(hor: Int, depth: Int)
   object Position:
@@ -43,4 +42,4 @@ object Day02 extends PuzzleSolution {
   case class Forward(value: Int) extends Direction
   case class Up(value: Int) extends Direction
   case class Down(value: Int) extends Direction
-}
+

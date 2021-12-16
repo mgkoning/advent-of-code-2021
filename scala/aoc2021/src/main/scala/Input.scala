@@ -1,6 +1,6 @@
 import scala.io.Source
 
-object Input {
+object Input:
   def getFile(day: Int): Source =
     Source.fromFile(f"../../input/day$day%02d.txt")
 
@@ -13,4 +13,4 @@ object Input {
           .map((c, x) => (Coord(x, y), chunkMap(c)))
       )
       .toMap
-}
+

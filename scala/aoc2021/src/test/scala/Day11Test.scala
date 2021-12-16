@@ -2,7 +2,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import Day11.*
 
-class Day11Test {
+class Day11Test:
 
   val input = """5483143223
 2745854711
@@ -40,4 +40,4 @@ class Day11Test {
       (0 to 9)
         .map(y => (0 to 9).flatMap(x => o.get(Coord(x, y)).toSeq).mkString)
         .mkString("\n"))
-}
+

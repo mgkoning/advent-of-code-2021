@@ -1,7 +1,7 @@
 import scala.io.Source
 import scala.annotation.tailrec
 
-object Day06 extends PuzzleSolution {
+object Day06 extends PuzzleSolution:
   def title = "Lanternfish"
 
   def solve(input: Source) =
@@ -36,4 +36,4 @@ object Day06 extends PuzzleSolution {
   val toIgnore = Set(',', '\n', '\r')
   def readAges(chars: Seq[Char]): List[Int] =
     chars.filter(!toIgnore.contains(_)).map(_ - '0').toList
-}
+

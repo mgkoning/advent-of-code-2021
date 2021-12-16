@@ -8,9 +8,9 @@ object Day15 extends PuzzleSolution:
     def append(path: Path, next: (Coord, Int)): Path =
       val (coord, risk) = next
       Path(coord :: path.visited, path.risk + risk)
-  implicit object PathOrdering extends Ordering[Path] {
+  implicit object PathOrdering extends Ordering[Path]:
     def compare(one: Path, other: Path) = one.risk compare other.risk
-  }
+
 
   def solve(input: scala.io.Source) =
     val cave = readCave(input.getLines.toSeq)

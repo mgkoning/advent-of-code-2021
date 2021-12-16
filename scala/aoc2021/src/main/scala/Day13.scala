@@ -1,4 +1,4 @@
-object Day13 extends PuzzleSolution {
+object Day13 extends PuzzleSolution:
   def title = "Transparent Origami"
 
   sealed trait Fold
@@ -39,4 +39,4 @@ object Day13 extends PuzzleSolution {
           case _ => acc
         )
 
-}
+

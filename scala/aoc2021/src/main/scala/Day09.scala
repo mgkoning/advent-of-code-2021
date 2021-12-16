@@ -1,7 +1,7 @@
 import scala.io.Source
 import scala.annotation.tailrec
 
-object Day09 extends PuzzleSolution {
+object Day09 extends PuzzleSolution:
   def title = "Smoke Basin"
 
   def solve(input: Source) =
@@ -31,4 +31,4 @@ object Day09 extends PuzzleSolution {
 
   def readInput(lines: Seq[String]): Map[Coord, Int] =
     Input.readGrid(lines, _.toSeq, _ - '0')
-}
+

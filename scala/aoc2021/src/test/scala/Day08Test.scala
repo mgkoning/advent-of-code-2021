@@ -2,7 +2,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import Day08.*
 
-class Day08Test {
+class Day08Test:
   val example1 = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf"
 
   val example2 = """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
@@ -34,4 +34,3 @@ gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
     val decodedDisplays = inputs.map(decode)
     val part2 = decodedDisplays.map(displayNumber).sum
     assertEquals(61229, part2)
-}

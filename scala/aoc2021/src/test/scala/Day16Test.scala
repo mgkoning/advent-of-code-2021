@@ -2,7 +2,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import Day16.*
 
-class Day16Test {
+class Day16Test:
 
   @Test def getValueTest =
     assertEquals(3, determineValue("C200B40A82"))
@@ -16,4 +16,4 @@ class Day16Test {
 
   def determineValue(s: String) : Long =
     getValue(Packet.parseFromHex(s.toSeq))
-}
+

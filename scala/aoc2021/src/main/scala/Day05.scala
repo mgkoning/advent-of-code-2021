@@ -1,6 +1,6 @@
 import scala.io.Source
 
-object Day05 extends PuzzleSolution {
+object Day05 extends PuzzleSolution:
   def title = "Hydrothermal Venture"
 
   def solve(input: Source): Unit =
@@ -29,4 +29,3 @@ object Day05 extends PuzzleSolution {
     input.map {
       case s"$x0,$y0 -> $x1,$y1" => Line(Coord.ofStrings(x0, y0), Coord.ofStrings(x1, y1)),
     }.toList
-}

@@ -1,5 +1,5 @@
 import scala.annotation.tailrec
-object Day12 extends PuzzleSolution {
+object Day12 extends PuzzleSolution:
   def title = "Passage Pathing"
 
   sealed trait Area
@@ -77,4 +77,4 @@ object Day12 extends PuzzleSolution {
     def toConnection(line: String) = line match
       case s"$from-$to" => toArea(from) -> toArea(to)
     lines.map(toConnection)
-}
+

@@ -1,7 +1,7 @@
 import scala.util.matching.Regex
 import scala.io.Source
 
-object Day04 extends PuzzleSolution {
+object Day04 extends PuzzleSolution:
 
   type Card = Map[Position, Square]
 
@@ -68,4 +68,4 @@ object Day04 extends PuzzleSolution {
         (line, y) => spaces.split(line.trim).zipWithIndex
           .map((number, x) => (Position(x, y), Square(number.toInt))))
       .toMap
-}
+

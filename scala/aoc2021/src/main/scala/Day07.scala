@@ -1,6 +1,6 @@
 import scala.io.Source
 
-object Day07 extends PuzzleSolution {
+object Day07 extends PuzzleSolution:
   def title = "The Treachery of Whales"
 
   def solve(input: Source) =
@@ -23,4 +23,4 @@ object Day07 extends PuzzleSolution {
 
   def readCrabPositions(value: String): IndexedSeq[Int] =
     value.split(',').map(_.toInt).toIndexedSeq
-}
+

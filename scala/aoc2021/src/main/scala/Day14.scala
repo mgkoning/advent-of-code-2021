@@ -1,4 +1,4 @@
-object Day14 extends PuzzleSolution {
+object Day14 extends PuzzleSolution:
   def title = "Extended Polymerization"
 
   type Rules = Map[(Char, Char), Char]
@@ -51,4 +51,4 @@ object Day14 extends PuzzleSolution {
       .map(line => ((line.charAt(0), line.charAt(1)), line.charAt(6)))
       .toMap
     (polymer.toList, rules)
-}
+

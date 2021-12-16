@@ -1,6 +1,6 @@
 import scala.io.Source
 
-object Day08 extends PuzzleSolution {
+object Day08 extends PuzzleSolution:
   def title = "Seven Segment Search"
 
   type Digit = String
@@ -54,5 +54,3 @@ object Day08 extends PuzzleSolution {
     def parseLine(line: String) = line match
       case s"$signals | $output" => Display(getDigits(signals), getDigits(output))
     lines.toSeq.map(parseLine)
-
-}

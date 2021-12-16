@@ -2,7 +2,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import Day14.*
 
-class Day14Test {
+class Day14Test:
   val input = """NNCB
 
 CH -> B
@@ -31,5 +31,3 @@ CN -> C"""
   @Test def stepTest =
     val (polymer, rules) = parseInput(input.linesIterator.toSeq)
     assertEquals("NCNBCHB", step(rules)(polymer).mkString)
-
-}

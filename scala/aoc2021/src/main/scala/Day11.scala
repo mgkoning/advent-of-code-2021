@@ -1,5 +1,5 @@
 import scala.annotation.tailrec
-object Day11  extends PuzzleSolution {
+object Day11  extends PuzzleSolution:
   def title = "Dumbo Octopus"
 
   type Octopodes = Map[Coord, Int]
@@ -32,4 +32,4 @@ object Day11  extends PuzzleSolution {
 
   def readOctopodes(lines: Seq[String]): Octopodes =
     Input.readGrid(lines, _.toSeq, _ - '0')
-}
+

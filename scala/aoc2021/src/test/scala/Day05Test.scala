@@ -2,7 +2,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import Day05.*
 
-class Day05Test {
+class Day05Test:
   val input = """0,9 -> 5,9
 8,0 -> 0,8
 9,4 -> 3,4
@@ -27,4 +27,3 @@ class Day05Test {
     val diagonal = ventSpecs.flatMap(diagonalCoords)
     val allCoords = horVert.concat(diagonal)
     assertEquals(12, countDuplicates(allCoords))
-}

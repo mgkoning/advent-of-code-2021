@@ -1,5 +1,5 @@
 import scala.annotation.tailrec
-object Day10 extends PuzzleSolution {
+object Day10 extends PuzzleSolution:
   def title = "Syntax Scoring"
 
   def solve(input: scala.io.Source) =
@@ -52,5 +52,3 @@ object Day10 extends PuzzleSolution {
       case ']' => 2
       case '}' => 3
       case '>' => 4
-
-}
