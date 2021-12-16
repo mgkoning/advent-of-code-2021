@@ -1,6 +1,6 @@
 import scala.io.Source
 
-object Day01 extends PuzzleSolution {
+object Day01 extends PuzzleSolution:
 
   def title = "Sonar Sweep"
 
@@ -17,4 +17,4 @@ object Day01 extends PuzzleSolution {
   def windows(values: List[Int]) =
     values.zip(values.drop(1)).zip(values.drop(2))
       .map((l, r) => l._1 + l._2 + r)
-}
+
