@@ -15,6 +15,5 @@ class Day16Test {
     assertEquals(1, determineValue("9C0141080250320F1802104A08"))
 
   def determineValue(s: String) : Long =
-    val (packet, _) = parsePacket(readBits(s.toSeq))
-    getValue(packet)
+    getValue(Packet.parseFromHex(s.toSeq))
 }
