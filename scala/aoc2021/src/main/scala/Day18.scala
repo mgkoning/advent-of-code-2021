@@ -4,6 +4,9 @@ object Day18 extends PuzzleSolution:
   def title = "Snailfish"
 
   sealed trait SnailfishNumber
+  case class Pair(left: SnailfishNumber, right: SnailfishNumber) extends SnailfishNumber
+  case class Num(value: Int) extends SnailfishNumber
+
   object SnailfishNumber:
     def show(n: SnailfishNumber): String =
       n match
@@ -16,9 +19,8 @@ object Day18 extends PuzzleSolution:
     def magSum(numbers: Seq[SnailfishNumber]): Int =
       magnitude(numbers.reduce(plus))
 
+    type Exploding = (Option[Int], Option[Int])
     @tailrec def reduce(number: SnailfishNumber): SnailfishNumber =
-      type Exploding = (Option[Int], Option[Int])
-
       // Pushing a number to the right down a tree means taking the left-most
       // branches from that subtree since that is the number most immediately to
       // the right of the original tree. Likewise, pushing a number to the left
@@ -62,7 +64,7 @@ object Day18 extends PuzzleSolution:
       // Split returns `Some` if any of the numbers in this tree split.
       def split(number: SnailfishNumber): Option[SnailfishNumber] =
         number match
-          case num@Num(v) if 9 < v => Some(num.split)
+          case Num(v) if 9 < v => Some(Pair(Num(v / 2), Num(v - v / 2)))
           case Num(_) => None
           case Pair(left, right) =>
             split(left).map(Pair(_, right)).orElse(split(right).map(Pair(left, _)))
@@ -76,15 +78,7 @@ object Day18 extends PuzzleSolution:
     def magnitude(number: SnailfishNumber): Int =
       number match
         case Num(i) => i
-        case Pair(l, r) =>
-          List(l, r).map(SnailfishNumber.magnitude)
-            .zip(List(3, 2)).map(_ * _)
-            .sum
-  case class Num(value: Int) extends SnailfishNumber:
-    def split: SnailfishNumber =
-      val half = value / 2
-      Pair(Num(half), Num(value - half))
-  case class Pair(left: SnailfishNumber, right: SnailfishNumber) extends SnailfishNumber
+        case Pair(l, r) => 3 * magnitude(l) + 2 * magnitude(r)
 
   def solve(input: scala.io.Source) =
     println("Part 1:")
