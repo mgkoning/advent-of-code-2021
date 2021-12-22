@@ -40,6 +40,7 @@ object Coord3:
     Ordering.by[Coord3, Int](_.x)
       .orElse(Ordering.by(_.y))
       .orElse(Ordering.by(_.z))
+  val origin = Coord3(0,  0, 0)
 
   def ofStrings(x: String, y: String, z: String) = Coord3(x.toInt, y.toInt, z.toInt)
 

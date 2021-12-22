@@ -1,9 +1,9 @@
-import org.junit.Test
+import org.junit.{Ignore, Test}
 import org.junit.Assert.*
 import Day21.*
 
 class Day21Test:
-  @Test def part2 =
+  @Ignore @Test def part2 =
     val realGame = playGame(Game(Pawn(PlayerOne, 4, 0), Pawn(PlayerTwo, 8, 0)))
     val winCounts = realGame.positions
       .toList
