@@ -1,19 +1,21 @@
 import scala.annotation.tailrec
+
 object Day23 extends PuzzleSolution:
   def title = "Amphipod"
 
   def solve(input: scala.io.Source) =
-    // val initialPositions = readInitialPositions(input.getLines)
+    val initialPositions = readInitialPositions(input.getLines)
     println("Part 1:")
-    // val result = organize(initialPositions)
-    // println(result)
-    
     // no generic solutions - just the moves as worked out on paper.
     println(5*1000 + 8*1000 + 8*100 + 4*100 + 6*10 + 7*10 + 8 + 8)
     println("Part 2:")
     println(
       7*1 + 7*100 + 4*10 + 8*1 + 5*10 + 2*100 + 7*10 + 8*1 + 8*10 + 5*100 + 6*100 + 6*1000 + 3*1 +
       7*100 + 9*10 + 9*1000 + 10*1000 + 10*1000 + 10*1000 + 9*100 + 5*1 + 5*1 + 9*1 +9*1)
+    // println("Part 1 redux:")
+    // val result = organize(initialPositions)
+    // // Correct but slow (takes 17 sec)
+    // println(result)
 
   // --- Everything below this line is just for nostalgia purposes --- //
   sealed trait Location
@@ -39,7 +41,7 @@ object Day23 extends PuzzleSolution:
 
   def legalHallwayStop(location: Hallway) = !outsideSideRoom.contains(location)
 
-  case class State(positions: List[Amphipod], energyExpended: Long, heuristic: (Long, Long, Long, Long))
+  case class State(positions: List[Amphipod], energyExpended: Long, description: String)
   val validHallwayMoves = hallway.diff(outsideSideRoom).toList
   def organize(startPositions: List[Amphipod]): Long =
     def isDone(candidate: Amphipod, all: List[Amphipod]): Boolean =
@@ -51,20 +53,20 @@ object Day23 extends PuzzleSolution:
           val other = all.filter(o => o != candidate && o.kind == candidate.kind).head
           isDone(other, all)
 
-    @tailrec def organizeStep(states: List[State], minimumSoFar: Long): Long =
+    @tailrec def organizeStep(states: List[State], statesSeen: Map[String, Long]): Long =
       states match
-        case Nil => minimumSoFar
+        case Nil => -1
         case state::remaining =>
-            val State(positions, energyExpended, _) = state
-            val notDone = positions.filter(!isDone(_, positions))
-            if notDone.isEmpty then
-              val newMinimum = math.min(minimumSoFar, state.energyExpended)
-              println(s"Successful move: ${state.energyExpended}, min ${newMinimum}")
-              organizeStep(remaining.filter(s => s.energyExpended < newMinimum), newMinimum)
-            else
-              //showState(state)
-              val moves = notDone.flatMap(findLegalMoves(state)).filter(s => s.energyExpended < minimumSoFar).sortBy(_.heuristic)
-              organizeStep(moves:::remaining, minimumSoFar)
+          val State(positions, energyExpended, description) = state
+          val notDone = positions.filter(!isDone(_, positions))
+          if notDone.isEmpty then state.energyExpended
+          else
+            //showState(state)
+            val moves = notDone.flatMap(findLegalMoves(state)).filter(m => m.energyExpended < statesSeen.getOrElse(m.description, 1000000L))
+            val updatedSeen = moves.foldLeft(statesSeen)(
+              (s, m) => s.updatedWith(m.description)(v => Some(Math.min(v.getOrElse(100000L), m.energyExpended))))
+            val newRemaining = (moves:::remaining).sortBy(s => s.energyExpended)
+            organizeStep(newRemaining, updatedSeen)
 
     def occupant(location: Location, others: List[Amphipod]): Option[Amphipod] =
       others.find(_.position == location)
@@ -89,15 +91,15 @@ object Day23 extends PuzzleSolution:
         determineDistance(mover.position, destination, others).map(distance =>
           //println(s"Add move from ${mover.position} to $destination (${showState(state)})")
           val positions = mover.copy(position = destination)::others
-          State(positions, state.energyExpended + distance * energyRequired(mover.kind),
-            determineHeuristic(positions))))
+          State(positions, state.energyExpended + distance * energyRequired(mover.kind), showState(positions))))
       result
 
-    def determineHeuristic(state: List[Amphipod]) =
-      def heuristicFor(kind: Char): Long =
-        state.filter(_.kind == kind)
-          .map(a => determineDistance(a.position, SideRoom(kind, 1), List.empty).getOrElse(100000)).sum
-      (heuristicFor('D'), heuristicFor('C'), heuristicFor('B'), heuristicFor('A'))
+    // def determineHeuristic(state: List[Amphipod]) =
+    //   def heuristicFor(kind: Char): Long =
+    //     state.filter(_.kind == kind)
+    //       .map(a => determineDistance(a.position, SideRoom(kind, 1), List.empty).getOrElse(100000)).sum
+    //   (heuristicFor('D'), heuristicFor('C'), heuristicFor('B'), heuristicFor('A'))
+
     def determineDistance(from: Location, to: Location, others: List[Amphipod]): Option[Int] =
       val occupied = others.map(_.position).toSet
       def findPath(toVisit: List[(List[Location], Int)], seen: Set[Location]): Option[Int] =
@@ -114,13 +116,13 @@ object Day23 extends PuzzleSolution:
               findPath((nextMoves ::: vs).sortBy(_._2), seen ++ moves)
       findPath(List((List(from), 0)),Set(from))
 
-    organizeStep(List(State(startPositions, 0, (0, 0, 0, 0))), 1000000L)
+    organizeStep(List(State(startPositions, 0, showState(startPositions))), Map.empty)
 
-  def showState(state: State): String =
+  def showState(positions: List[Amphipod]): String =
     def showLocation(loc: Location) =
       loc match { case Hallway(i) => s"H$i"; case SideRoom(h, i) => s"$h$i" }
-    state.positions.map(a => s"${a.kind}@${showLocation(a.position)}").sorted.mkString(",")
-      + s"@${state.energyExpended}"
+    positions.map(a => s"${a.kind}@${showLocation(a.position)}").sorted.mkString(",")
+
   def readInitialPositions(lines: Iterator[String]): List[Amphipod] =
     lines.toSeq.foldLeft(List.empty)((list, line) =>
       line match
